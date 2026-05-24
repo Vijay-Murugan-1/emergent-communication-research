@@ -1,0 +1,4 @@
+- Learned RL interaction loop
+- Understood episodes vs interactions
+- Understood rewards and termination
+- Observed random agent behavior
