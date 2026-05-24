@@ -1,0 +1,4 @@
+- Learned sparse rewards
+- Understood delayed rewards
+- Observed episode resets
+- Understood exploration difficulty
