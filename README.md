@@ -1,2 +1,3 @@
-# emergent-communication-research
-Research and experimentation on emergent communication, multi-agent reinforcement learning, and AI coordination systems.
+A research-focused Reinforcement Learning repository documenting the complete learning and development journey from foundational RL concepts to advanced intelligent multi-agent systems. This repository includes detailed theory notes, intuitive explanations, practical implementations, environment analysis, Q-learning experiments, Bellman intuition, value-based learning methods, policy improvement concepts, and exploration vs exploitation studies using various environments 
+
+The goal of this repository is not only to implement RL algorithms, but also to deeply understand the mathematical intuition, sequential decision making, long-term reward optimization, and learning dynamics behind intelligent agents. Future expansions of this repository will include Deep Reinforcement Learning (DRL), Multi-Agent Reinforcement Learning (MARL), emergent communication systems, research paper implementations, experiment tracking, and advanced RL research workflows.
