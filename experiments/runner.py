@@ -23,6 +23,7 @@ class ExperimentRunner:
         self.device = torch.device(config.training.device if torch.cuda.is_available() else "cpu")
         self.global_step = 0
         self.best_eval_metric = float('inf')  # Use MSE (lower is better) for early stopping
+        self.reward_baseline = 0.0 # Moving average for REINFORCE
         self.patience = 5
         self.epochs_without_improvement = 0
         self.early_stop_triggered = False
@@ -154,8 +155,17 @@ class ExperimentRunner:
                     loss_entropy = torch.tensor(0.0, device=self.device)
                     
                     if self.config.communication.protocol == "reinforce":
+                        # Update baseline
+                        mean_reward = total_reward.detach().mean().item()
+                        self.reward_baseline = 0.9 * self.reward_baseline + 0.1 * mean_reward
+                        advantages = total_reward.detach() - self.reward_baseline
+                        
                         log_probs = message.log_probs.sum(dim=1)
-                        loss_policy = -(log_probs * total_reward.detach()).mean()
+                        loss_policy = -(log_probs * advantages).mean()
+                        
+                        # Add small entropy bonus to prevent collapse
+                        if hasattr(message, 'entropy') and message.entropy is not None:
+                            loss_entropy = -0.01 * message.entropy.mean()
                     else:
                         loss_policy = torch.tensor(0.0, device=self.device)
                         
@@ -216,7 +226,10 @@ class ExperimentRunner:
             self.checkpoint_manager.save(
                 epoch=epoch,
                 step=self.global_step,
-                model_state=self.sender.state_dict(), 
+                model_state={
+                    "sender": self.sender.state_dict(),
+                    "receiver": self.receiver.state_dict()
+                }, 
                 optimizer_state=self.optimizer.state_dict(),
                 scheduler_state=None,
                 config=self.config,

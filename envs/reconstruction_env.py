@@ -76,23 +76,24 @@ class ReconstructionGameEnv(gym.Env):
             lengths = torch.full((reconstructed.size(0),), self.config.communication.max_length)
             entropy = None
             
-        reward = self.reward_fn(
+        reward_dict = self.reward_fn(
             loss_reconstruction, 
             DummyMessage(), 
             self.config.communication.max_length, 
             self.config.communication.vocab_size
         )
+        reward_total = reward_dict["reward/total"]
         
         terminated = True
         truncated = False
         
         info = {
             "loss": loss_reconstruction.mean().item(),
-            "reward": reward.mean().item()
+            "reward": reward_total.mean().item()
         }
         
         # Reset internally for continuous sampling
         next_obs, _ = self.reset()
         
         # For PettingZoo / standard RL, rewards and next obs are returned
-        return next_obs, reward.detach().cpu().numpy(), terminated, truncated, info
+        return next_obs, reward_total.detach().cpu().numpy(), terminated, truncated, info
