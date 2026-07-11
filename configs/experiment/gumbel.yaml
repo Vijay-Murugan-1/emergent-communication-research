@@ -1,0 +1,14 @@
+# @package _global_
+experiment:
+  name: "gumbel_baseline"
+  log_dir: "logs/gumbel"
+  checkpoint_dir: "checkpoints/gumbel"
+
+communication:
+  protocol: "gumbel"
+  vocab_size: 20
+  max_length: 10
+  temperature: 1.0
+
+training:
+  epochs: 20

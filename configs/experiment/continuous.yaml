@@ -1,0 +1,13 @@
+# @package _global_
+experiment:
+  name: "continuous_baseline"
+  log_dir: "logs/continuous"
+  checkpoint_dir: "checkpoints/continuous"
+
+communication:
+  protocol: "continuous"
+  vocab_size: 20
+  max_length: 10
+
+training:
+  epochs: 20

@@ -1,0 +1,13 @@
+# @package _global_
+experiment:
+  name: "reinforce_baseline"
+  log_dir: "logs/reinforce"
+  checkpoint_dir: "checkpoints/reinforce"
+
+communication:
+  protocol: "reinforce"
+  vocab_size: 20
+  max_length: 10
+
+training:
+  epochs: 20
