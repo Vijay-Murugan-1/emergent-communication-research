@@ -1,4 +1,4 @@
-from environments.two_symbol_comm_env import TwoSymbolCommEnv
+from environments.speaker_listener.two_symbol_comm_env import TwoSymbolCommEnv
 
 env = TwoSymbolCommEnv()
 
